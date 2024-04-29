@@ -14,9 +14,9 @@ public class Category {
     private String name;
     private String description;
 //
-    @JsonIgnore
-    @ManyToMany(mappedBy = "categories",fetch = FetchType.LAZY)
-    private List<Product> products;
+//    @JsonIgnore
+//    @ManyToMany(mappedBy = "categories",fetch = FetchType.LAZY)
+//    private List<Product> products;
 
 //    @ManyToMany(mappedBy = "categories",fetch = FetchType.LAZY)
 //    private List<Customer> customers;
@@ -25,19 +25,18 @@ public class Category {
     public Category() {
     }
 
-    public Category(int categoryId, String name, String description, List<Product> products) {
-        this.category_id = categoryId;
+    public Category(int category_id, String name, String description) {
+        this.category_id = category_id;
         this.name = name;
         this.description = description;
-        this.products = products;
     }
 
-    public int getCategoryId() {
+    public int getCategory_id() {
         return category_id;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.category_id = categoryId;
+    public void setCategory_id(int category_id) {
+        this.category_id = category_id;
     }
 
     public String getName() {
@@ -56,21 +55,12 @@ public class Category {
         this.description = description;
     }
 
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
-
     @Override
     public String toString() {
         return "Category{" +
-                "categoryId=" + category_id+
+                "category_id=" + category_id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", products=" + products +
                 '}';
     }
 }

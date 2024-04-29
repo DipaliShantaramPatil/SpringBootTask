@@ -1,7 +1,6 @@
 package com.task.registrationcrudoperation.entity;
 
 import jakarta.persistence.*;
-import jakarta.persistence.criteria.Fetch;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -15,7 +14,7 @@ public class Customer {
     private String firstName;
     private String lastName;
     private String emailId;
-    private String phoneNo;
+    private Long phoneNo;
     private String gender;
     private LocalDate dateOfBirth;
 
@@ -31,22 +30,40 @@ public class Customer {
             inverseJoinColumns = @JoinColumn(name = "product_id"))
     private List<Product> products;
 
-    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "customer_categories",
-            joinColumns = @JoinColumn(name = "customer_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private List<Category> categories;
+//    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+//    @JoinTable(
+//            name = "customer_categories",
+//            joinColumns = @JoinColumn(name = "customer_id"),
+//            inverseJoinColumns = @JoinColumn(name = "category_id"))
+//    private List<Category> categories;
+
+//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinTable(name = "customer_order",
+//            joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "regId"),
+//            inverseJoinColumns = @JoinColumn(name = "order_id", referencedColumnName = "order_id"))
+//    private List<Order> orders = new ArrayList<>();
 
 //    @OneToOne(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "address_id", referencedColumnName = "id")
 //    private Address address;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="fk_cust_id_ord",referencedColumnName = "regId")
+    private  List<CustomerOrder> orders;
+
+//    @OneToMany(cascade = CascadeType.ALL)
+//    @JoinColumn(name="home_id")
+//    private List<HomeAddress> homeAddress;
+
+//    @OneToMany(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "cust_office_id")
+//    private List<OfficeAddress> officeAddresses;
+
 
     public Customer() {
     }
 
-    public Customer(int regId, String firstName, String lastName, String emailId, String phoneNo, String gender, LocalDate dateOfBirth, List<Address> address, List<Product> products, List<Category> categories) {
+    public Customer(int regId, String firstName, String lastName, String emailId, Long phoneNo, String gender, LocalDate dateOfBirth, List<Address> address, List<Product> products, List<CustomerOrder> orders) {
         this.regId = regId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -56,7 +73,7 @@ public class Customer {
         this.dateOfBirth = dateOfBirth;
         this.address = address;
         this.products = products;
-        this.categories = categories;
+        this.orders = orders;
     }
 
     public int getRegId() {
@@ -91,11 +108,11 @@ public class Customer {
         this.emailId = emailId;
     }
 
-    public String getPhoneNo() {
+    public Long getPhoneNo() {
         return phoneNo;
     }
 
-    public void setPhoneNo(String phoneNo) {
+    public void setPhoneNo(Long phoneNo) {
         this.phoneNo = phoneNo;
     }
 
@@ -131,12 +148,12 @@ public class Customer {
         this.products = products;
     }
 
-    public List<Category> getCategories() {
-        return categories;
+    public List<CustomerOrder> getOrders() {
+        return orders;
     }
 
-    public void setCategories(List<Category> categories) {
-        this.categories = categories;
+    public void setOrders(List<CustomerOrder> orders) {
+        this.orders = orders;
     }
 
     @Override
@@ -146,12 +163,12 @@ public class Customer {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", emailId='" + emailId + '\'' +
-                ", phoneNo='" + phoneNo + '\'' +
+                ", phoneNo=" + phoneNo +
                 ", gender='" + gender + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
                 ", address=" + address +
                 ", products=" + products +
-                ", categories=" + categories +
+                ", orders=" + orders +
                 '}';
     }
 }
